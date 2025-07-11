@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>بیلیتو</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IRANSansXFaNum&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      p {
+        margin: 0;
+      }
+
+      input {
+        font-family: "IRANSansXFaNum", sans-serif;
+      }
+
+      h3 {
+        font-weight: bold;
+        font-size: 32px;
+      }
+      h5 {
+        font-weight: bold;
+        font-size: large;
+      }
+
+      ul {
+        padding: 0;
+      }
+
+      button {
+        padding: 0;
+      }
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        font-family: "IRANSansXFaNum", sans-serif;
+      }
+
+      .scroll-container {
+        height: 100vh;
+        overflow: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+      }
+
+      .scroll-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+
+      .content {
+        height: 2000px; /* force scroll */
+        background: linear-gradient(#eee, #ccc);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="scrollContainer" class="scroll-container">
+      <!-- Desktop Header -->
+      <header
+        class="hidden lg:flex items-center justify-between px-[6.75rem] py-[2rem] max-lg:px-8 max-md:px-6"
+      >
+        <div class="flex items-center">
+          <img src="images/LOGO.svg" alt="بیلیتو" />
+          <h2 class="text-[#1d91cc] m-0"></h2>
+        </div>
+
+        <nav
+          class="relative flex items-center gap-[2rem] text-[1.25rem] max-md:hidden"
+        >
+          <a class="nav-link cursor-pointer text-[#606060] flex items-center"
+            >صفحه اصلی</a
+          >
+          <a class="nav-link cursor-pointer text-[#606060] flex items-center"
+            >بیمه مسافرتی</a
+          >
+          <a class="nav-link cursor-pointer text-[#606060] flex items-center"
+            >سفرهای من</a
+          >
+
+          <div class="relative">
+            <a
+              id="moreLink"
+              class="nav-link cursor-pointer text-[#606060] flex items-center gap-1"
+            >
+              سایر موارد
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-[1.5rem] h-[1.5rem]"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </a>
+
+            <!-- Dropdown menu -->
+            <div
+              id="dropdown"
+              class="hidden absolute right-0 mt-2 w-[10rem] bg-white shadow-lg rounded-lg z-10"
+            >
+              <a
+                class="block px-4 py-2 text-[#606060] hover:bg-gray-100 cursor-pointer"
+                >1</a
+              >
+              <a
+                class="block px-4 py-2 text-[#606060] hover:bg-gray-100 cursor-pointer"
+                >2</a
+              >
+              <a
+                class="block px-4 py-2 text-[#606060] hover:bg-gray-100 cursor-pointer"
+                >3</a
+              >
+            </div>
+          </div>
+        </nav>
+
+        <script>
+          const links = document.querySelectorAll(".nav-link");
+          const moreLink = document.getElementById("moreLink");
+          const dropdown = document.getElementById("dropdown");
+
+          links.forEach((link) => {
+            link.addEventListener("click", (e) => {
+              // اگر روی moreLink کلیک شد
+              if (link === moreLink) {
+                dropdown.classList.toggle("hidden"); // نمایش/مخفی کردن دراپ‌داون
+              } else {
+                dropdown.classList.add("hidden"); // If clicked on another link, close dropdown
+              }
+
+              // Make all links gray
+              links.forEach((l) => l.classList.remove("text-[#1d91cc]"));
+              links.forEach((l) => l.classList.add("text-[#606060]"));
+
+              // لینک انتخاب شده آبی شود
+              link.classList.remove("text-[#606060]");
+              link.classList.add("text-[#1d91cc]");
+            });
+          });
+        </script>
+
+        <div class="flex items-center gap-[1.5rem]">
+          <div
+            class="flex items-center gap-[0.75rem] text-[1.25rem] text-[#606060]"
+          >
+            <span>4045_021 پشتیبانی</span>
+            <span>
+              <img src="images/call.svg" alt="call" />
+            </span>
+          </div>
+
+          <div
+            class="bg-[#1d91cc] text-white px-5 py-[0.625rem] rounded-[0.5rem] text-[0.875rem] cursor-pointer border-none"
+          >
+            <button
+              id="userBtn"
+              class="flex items-center gap-2 cursor-pointer border-none"
+            >
+              <img src="images/user.svg" alt="user" />
+              <span>ورود/ثبت نام</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Mobile Header -->
+      <header class="flex items-center justify-between px-4 py-6 lg:hidden">
+        <!-- Right: menu icon -->
+        <button id="mobileMenuBtn" class="p-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-gray-700"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+        <!-- Center: Logo and Bilito text -->
+        <div class="flex items-center">
+          <img src="images/LOGO.svg" alt="بیلیتو" class="h-10" />
+        </div>
+
+        <!-- Left: user icon on light background -->
+        <button class="p-2 rounded-[0.1rem] bg-[#E8F4FA]">
+          <img src="images/user.svg" alt="user" class="w-7 h-7" />
+        </button>
+      </header>
+
+      <main class="pb-[3.5rem]">
+        <div class="relative">
+          <img
+            src="images/home page screen.svg"
+            alt="background"
+            class="w-full h-auto object-cover"
+          />
+
+          <!-- Search form -->
+          <div
+            class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-50 bg-white shadow-[0_0.25rem_1.25rem_rgba(0,0,0,0.1)] rounded-[0.5rem] flex justify-between gap-4 lg:px-6 py-5 max-lg:relative max-lg:bottom-auto max-lg:left-auto max-lg:translate-x-0 max-lg:translate-y-0 max-lg:bg-transparent max-lg:shadow-none max-lg:flex-col max-lg:items-center max-lg:w-[90%] max-lg:mx-auto"
+          >
+            <div
+              class="flex gap-4 pl-24 max-lg:pl-0 max-lg:flex-col max-lg:w-full flex-1"
+            >
+              <h5 class="lg:hidden text-[#1D91CC]">بیمه مسافرتی</h5>
+
+              <input
+                type="text"
+                placeholder="کشور مقصد"
+                class="flex-1 pl-20 pr-4 py-2 border border-[#ccc] rounded-[0.5rem]"
+              />
+              <input
+                type="text"
+                placeholder="مدت سفر"
+                class="flex-1 pl-20 pr-4 py-2 border border-[#ccc] rounded-[0.5rem]"
+              />
+              <input
+                type="text"
+                placeholder="مسافران"
+                class="flex-1 pl-20 pr-4 py-2 border border-[#ccc] rounded-[0.5rem]"
+              />
+            </div>
+
+            <div
+              class="px-17 py-2 bg-[#1d91cc] text-white rounded-[0.5rem] cursor-pointer border-none max-lg:w-full"
+            >
+              <button
+                id="searchBtn"
+                class="flex justify-center items-center gap-2 cursor-pointer border-none max-lg:w-full"
+              >
+                <img src="images/search-normal.svg" alt="search" />
+                <p class="text-[0.875rem]">جستجو</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <article
+          class="flex flex-col gap-[3.5rem] pt-[6.25rem] px-[6.75rem] max-lg:px-8 max-md:px-4"
+        >
+          <section>
+            <h3 class="hidden md:block">بیمه مسافرتی چیست؟</h3>
+            <h5 class="block md:hidden">بیمه مسافرتی چیست؟</h5>
+            <p
+              class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+            >
+              بیمه مسافرتی (Travel Insurance) یک نوع بیمه است که برای پوشش
+              هزینه‌ها و خسارات مرتبط با سفرهای بین‌المللی یا داخلی ارائه
+              می‌شود. این بیمه معمولاً توسط شرکت‌های بیمه عرضه می‌شود <br />
+              و شامل تعدادی پوشش است که می‌تواند شامل پوشش هزینه‌های پزشکی
+              اضطراری، پوشش لغو سفر، پوشش بیمه مسافرتی برای خسارت اموال، مسئولیت
+              مدنی و پوشش تأخیرات و لغو پرواز باشد. <br />
+              یکی از اصلی‌ترین پوشش‌های بیمه مسافرتی پوشش هزینه‌های پزشکی است.
+              اگر در سفر به بیماری یا حادثه‌ای برخورد کنید و نیاز به درمان داشته
+              باشید، بیمه مسافرتی ممکن است هزینه‌های مرتبط با ویزیت پزشک، بستری
+              در بیمارستان، داروها و معالجه‌های دیگر را پوشش دهد.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="hidden md:block">خدمات بیمه مسافرتی</h3>
+            <h5 class="block md:hidden">خدمات بیمه مسافرتی</h5>
+            <p
+              class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+            >
+              خدمات بیمه مسافرتی شامل مجموعه‌ای از خدماتی هستند که توسط شرکت‌های
+              بیمه به بیمه‌گزاران ارائه می‌شوند. این خدمات در ارتباط با موارد
+              مختلفی از جمله پوشش‌ها، مشاوره‌ها و خدمات اضافی مرتبط با سفرها
+              ارائه می‌شود. به طور کلی، خدمات بیمه مسافرتی عبارتند از:
+            </p>
+            <ul class="list-none flex flex-col gap-2">
+              <li class="flex gap-[1rem]">
+                <img src="images/tabler_report-medical.svg" alt="icon" />
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black"
+                    >پرداخت هزینه‌های درمانی:</span
+                  >
+                  هزینه‌های درمانی، بستری و جراحی
+                </div>
+              </li>
+              <li class="flex gap-[1rem]">
+                <img src="images/tabler_dental.svg" alt="icon" />
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black"
+                    >هزینه های دندانپزشکی:</span
+                  >
+                  درمان ضروری برای درمان عفونت شدید، دندان درد، کشیدن دندان و...
+                </div>
+              </li>
+              <li class="flex gap-[1rem]">
+                <img
+                  src="images/iconoir_pharmacy-cross-square.svg"
+                  alt="icon"
+                />
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black">جبران هزینه دارو:</span>
+                  در صورت مفقود شدن داروهای همراه مسافر (به شرط ضروری بودن مصرف
+                  آن‌ها) و ارسال مجدد داروهای مورد نیاز بیمه‌شده.
+                </div>
+              </li>
+              <li class="flex gap-[1rem]">
+                <img src="images/airplane.svg" alt="icon" />
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black">هزینه‌های بازگشت:</span>
+                  در صورت ابتلا به بیماری یا وقوع حادثه‌ای که بیش از 10 روز نیاز
+                  به بستری شدن در بیمارستان داشته باشد.
+                </div>
+              </li>
+              <li class="flex gap-[1rem]">
+                <img src="images/card-tick.svg" alt="icon" />
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black">جبران خسارت اموال:</span>
+                  بیمه مسافرتی می‌تواند در صورت خسارت، سرقت یا از دست رفتن وسایل
+                  شخصی و اموال شما در سفر تأمین کند.
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="hidden md:block">مبلغ بیمه مسافرتی</h3>
+            <h5 class="block md:hidden">مبلغ بیمه مسافرتی</h5>
+            <p
+              class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+            >
+              قیمت بیمه مسافرتی بر اساس عوامل متعددی تعیین می‌شود. در زیر به
+              برخی از اصلی‌ترین عواملی که بر قیمت بیمه مسافرتی تأثیر می‌گذارند،
+              اشاره شده است.
+            </p>
+            <ul class="list-none flex flex-col gap-4">
+              <li>
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black">مقصد سفر:</span>
+                  مقصد سفر یکی از عوامل اصلی در تعیین قیمت بیمه مسافرتی است.
+                  برخی مقاصد سفر به دلیل خطرات بیشتر، هزینه درمان بالاتر یا
+                  موارد دیگر، قیمت بیمه بیشتری دارند.
+                </div>
+              </li>
+              <li>
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black">مدت زمان سفر:</span>
+                  مدت زمان سفر نیز تأثیر قابل توجهی در قیمت بیمه دارد. معمولاً
+                  هرچه مدت زمان سفر بیشتر باشد، قیمت بیمه مسافرتی نیز بالاتر
+                  خواهد بود.
+                </div>
+              </li>
+              <li>
+                <div
+                  class="text[0.3rem] lg:text-[1.125rem] leading-[1.8] text-[#606060]"
+                >
+                  <span class="font-bold text-black">سن و تعداد مسافران:</span>
+                  سن و تعداد مسافران ممکن است نیز تأثیرگذار باشند. برخی
+                  بیمه‌گزاران در سنین بالا ممکن است قیمت بیمه بیشتری داشته
+                  باشند. همچنین، در صورتی که تعداد مسافران بیشتر باشد، قیمت بیمه
+                  ممکن است بیشتر شود.
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="hidden lg:flex justify-center items-center">
+            <img src="images/table frame.svg" alt="price table" />
+          </section>
+
+          <section class="flex lg:hidden justify-center items-center">
+            <img src="images/table2 frame.svg" alt="price table" />
+          </section>
+
+          <section>
+            <h3 class="hidden md:block pb-4">سوالات متداول</h3>
+            <h5 class="block md:hidden pb-4">سوالات متداول</h5>
+            <div class="border border-[#ededed] rounded-[0.5rem] px-2">
+              <!-- question 1-->
+              <details class="border-b border-[#ededed] py-[0.9375rem]">
+                <summary
+                  class="cursor-pointer flex items-center justify-between"
+                >
+                  <span
+                    >آیا بیمه مسافرتی پوششی برای خسارت به خودرو در سفر نیز
+                    دارد؟</span
+                  >
+                  <img src="images/arrow-up.svg" alt="arrow-up" />
+                </summary>
+                <div class="pr-4 pt-2 text-[#868686]">
+                  بیمه مسافرتی عموماً پوششی برای خسارت به خودرو ندارد...
+                </div>
+              </details>
+
+              <!-- question 2 -->
+              <details class="border-b border-[#ededed] py-[0.9375rem]">
+                <summary
+                  class="cursor-pointer flex items-center justify-between"
+                >
+                  <span
+                    >نرخ بلیط هواپیما برای نوزادان و کودکان زیر 12 سال چگونه
+                    است؟</span
+                  >
+                  <img src="images/arrow-up.svg" alt="arrow-up" />
+                </summary>
+                <div class="pr-4 pt-2 text-[#868686]"></div>
+              </details>
+              <!-- question 3 -->
+              <details class="border-b border-[#ededed] py-[0.9375rem]">
+                <summary
+                  class="cursor-pointer flex items-center justify-between"
+                >
+                  <span
+                    >آیا پس از خرید اینترنتی بلیط هواپیما امکان استرداد آن وجود
+                    دارد؟</span
+                  >
+                  <img src="images/arrow-up.svg" alt="arrow-up" />
+                </summary>
+                <div class="pr-4 pt-2 text-[#868686]"></div>
+              </details>
+              <!-- question 4 -->
+              <details class="border-b border-[#ededed] py-[0.9375rem]">
+                <summary
+                  class="cursor-pointer flex items-center justify-between"
+                >
+                  <span
+                    >آیا پس از خرید بلیط هواپیما امکان تغییر نام یا نام خانوادگی
+                    وجود دارد؟</span
+                  >
+                  <img src="images/arrow-up.svg" alt="arrow-up" />
+                </summary>
+                <div class="pr-4 pt-2 text-[#868686]"></div>
+              </details>
+              <!-- question 5 -->
+              <details class="border-b border-[#ededed] py-[0.9375rem]">
+                <summary
+                  class="cursor-pointer flex items-center justify-between"
+                >
+                  <span
+                    >هنگامی که از سایت خرید بلیط هواپیما رزرو بلیط را انجام
+                    می‌دهیم امکان انتخاب صندلی مورد نظرمان وجود دارد؟</span
+                  >
+                  <img src="images/arrow-up.svg" alt="arrow-up" />
+                </summary>
+                <div class="pr-4 pt-2 text-[#868686]"></div>
+              </details>
+              <!-- question 6 -->
+              <details class="border-b border-[#ededed] py-[0.9375rem]">
+                <summary
+                  class="cursor-pointer flex items-center justify-between"
+                >
+                  <span
+                    >بلیط پرواز چه کشورها ایرلاین‌هایی را می‌توانم‌ در سایت
+                    بیلیتو جستجو و خریداری کنم؟</span
+                  >
+                  <img src="images/arrow-up.svg" alt="arrow-up" />
+                </summary>
+                <div class="pr-4 pt-2 text-[#868686]"></div>
+              </details>
+              <!-- question 7 -->
+              <details class="border-b border-[#ededed] py-[0.9375rem]">
+                <summary
+                  class="cursor-pointer flex items-center justify-between"
+                >
+                  <span>چطور تاریخ پرواز را تغییر دهیم؟</span>
+                  <img src="images/arrow-up.svg" alt="arrow-up" />
+                </summary>
+                <div class="pr-4 pt-2 text-[#868686]"></div>
+              </details>
+            </div>
+          </section>
+        </article>
+        <script>
+          const searchButton = document.getElementById("searchBtn");
+          searchButton.addEventListener("click", function () {
+            alert("روی دکمه جستجو کلیک شد!");
+          });
+        </script>
+      </main>
+
+      <!-- Desktop Footer -->
+      <footer class="hidden lg:block w-full bg-[#f9f9f9]">
+        <div class="max-w-screen-xl mx-auto py-6">
+          <!-- App Download Section -->
+          <div class="flex justify-between flex-col md:flex-row gap-4 md:gap-0">
+            <div class="flex flex-col">
+              <h2 class="font-bold text-lg text-[#404040] mb-2">
+                اپلیکیشن بیلیتو
+              </h2>
+              <p class="text-lg text-[#606060]">
+                با نصب اپلیکیشن بیلیتو راحتی و سرعت در رزرو بلیط هواپیما را
+                داشته باشید.
+              </p>
+            </div>
+            <div class="flex gap-4">
+              <div
+                class="flex bg-[#11577a] text-white font-bold text-lg rounded border-none px-5 cursor-pointer"
+              >
+                <button
+                  class="flex items-center justify-center gap-6 cursor-pointer"
+                >
+                  Play Store
+                  <img src="images/Social media icons.svg" alt="Play Store" />
+                </button>
+              </div>
+              <div
+                class="flex bg-[#11577a] text-white font-bold text-lg rounded border-none px-5 cursor-pointer"
+              >
+                <button
+                  class="flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  Apple Store
+                  <img
+                    src="images/Social media icons (1).svg"
+                    alt="Apple Store"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-8 border-t border-[#ededed]" />
+
+          <!-- Main Footer Content -->
+          <div
+            class="flex flex-col md:flex-row justify-between pb-6 gap-8 md:gap-0"
+          >
+            <!-- Logo and Contact -->
+            <div class="flex flex-col gap-6">
+              <img src="images/LOGO.svg" alt="Logo" class="w-36 h-12" />
+              <span class="text-lg text-[#606060]">
+                تلفن پشتیبانی:&nbsp;&nbsp;98 76 54 32_021
+              </span>
+              <span class="text-lg text-[#606060]">
+                آدرس دفتر مرکزی: تهران، میدان آزادی، خیابان آزادی، خیابان جیحون،
+                طوس غربی.
+              </span>
+            </div>
+
+            <!-- Useful Links -->
+            <div class="flex flex-col md:pl-62">
+              <div class="border-b border-[#ededed] pb-2">
+                <h2 class="m-0 font-bold text-lg text-[#606060]">
+                  لینکهای مفید بیلیتو
+                </h2>
+              </div>
+              <ul
+                class="pt-4 flex flex-col gap-2 list-none m-0 text-[#606060] text-base"
+              >
+                <li>
+                  <a href="/about" class="text-sm text-[#606060] no-underline"
+                    >درباره ما</a
+                  >
+                </li>
+                <li>
+                  <a href="/contact" class="text-sm text-[#606060] no-underline"
+                    >تماس با ما</a
+                  >
+                </li>
+                <li>
+                  <a href="/refund" class="text-sm text-[#606060] no-underline"
+                    >استرداد بلیط</a
+                  >
+                </li>
+                <li>
+                  <a href="/guide" class="text-sm text-[#606060] no-underline"
+                    >راهنمای خرید بلیط</a
+                  >
+                </li>
+                <li>
+                  <a href="/rules" class="text-sm text-[#606060] no-underline"
+                    >قوانین و مقررات</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Bottom Footer -->
+          <div
+            class="flex flex-col-reverse md:flex-row justify-between items-center pb-8 gap-4 md:gap-0"
+          >
+            <!-- Social + Email -->
+            <div class="flex flex-col gap-2 pr-6 items-center md:items-end">
+              <div class="flex gap-6">
+                <img
+                  src="images/social-media/Social media icons-4.svg"
+                  alt="telegram"
+                />
+                <img
+                  src="images/social-media/Social media icons-3.svg"
+                  alt="linkedin"
+                />
+                <img src="images/social-media/_Facebook.svg" alt="youtube" />
+                <img
+                  src="images/social-media/Social media icons-2.svg"
+                  alt="instagram"
+                />
+                <img
+                  src="images/social-media/Social media icons-1.svg"
+                  alt="facebook"
+                />
+                <img
+                  src="images/social-media/Social media icons.svg"
+                  alt="twitter"
+                />
+              </div>
+              <div class="text-base text-[#0077db]" dir="ltr">
+                Shiva.arghvni1996@gmail.com
+              </div>
+            </div>
+            <!-- Certifications -->
+            <div class="flex gap-4">
+              <img src="images/certifications/Frame 26086959.svg" alt="" />
+              <img src="images/certifications/Frame 26086960.svg" alt="" />
+              <img src="images/certifications/Frame 26086957.svg" alt="" />
+              <img src="images/certifications/Frame 26086961.svg" alt="" />
+              <img src="images/certifications/Frame 26086958.svg" alt="" />
+            </div>
+          </div>
+
+          <!-- Back to Top -->
+          <div
+            class="pt-4 border-t border-[#ededed] flex flex-col items-center justify-center gap-2"
+          >
+            <button
+              id="scrollToTopDesktop"
+              class="border-none bg-none cursor-pointer"
+            >
+              <img src="images/arrow-circle-up.svg" alt="arrow-circle-up" />
+            </button>
+            <div class="text-xs text-[#404040]">بازگشت به بالا</div>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Mobile Footer -->
+      <footer class="block lg:hidden bg-[#f9f9f9] w-full">
+        <div
+          class="max-w-screen-xl mx-auto py-6 px-4 flex flex-col items-center gap-6"
+        >
+          <!-- Logo and contact info -->
+          <div class="flex gap-10">
+            <div>
+              <p class="text-sm text-[#606060] leading-6">
+                آدرس دفتر مرکزی: تهران، میدان آزادی، خیابان آزادی، خیابان جیحون،
+                طوس غربی.
+              </p>
+              <p class="text-sm text-[#606060] pt-3">
+                تلفن پشتیبانی: 98 76 54 32_021
+              </p>
+            </div>
+            <img src="images/LOGO.svg" alt="Logo" class="w-36 h-12" />
+          </div>
+
+          <!-- Useful Links -->
+          <div class="w-full pt-4 flex justify-between">
+            <div>
+              <h2
+                class="text-[#606060] font-bold border-b border-[#ededed] pb-2"
+              >
+                لینک‌های مفید
+              </h2>
+              <ul
+                class="mt-4 flex flex-col gap-5 items-start text-[#606060] text-sm"
+              >
+                <li><a href="#">درباره ما</a></li>
+                <li><a href="#">تماس با ما</a></li>
+                <li><a href="#">استرداد بلیط</a></li>
+                <li><a href="#">راهنمای خرید بلیط</a></li>
+                <li><a href="#">قوانین و مقررات</a></li>
+              </ul>
+            </div>
+
+            <!-- App Stores -->
+            <div class="flex flex-col gap-4 mt-7">
+              <div
+                class="flex bg-[#11577a] text-white font-bold text-lg rounded-[0.5rem] border-none px-10 py-5 cursor-pointer"
+              >
+                <button
+                  class="flex items-center justify-center gap-6 cursor-pointer"
+                >
+                  Play Store
+                  <img
+                    src="images/Social media icons.svg"
+                    alt="Play Store"
+                    class="h-5"
+                  />
+                </button>
+              </div>
+              <div
+                class="flex bg-[#11577a] text-white font-bold text-lg rounded-[0.5rem] border-none px-10 py-5 cursor-pointer"
+              >
+                <button
+                  class="flex items-center justify-center gap-4 cursor-pointer"
+                >
+                  Apple Store
+                  <img
+                    src="images/Social media icons (1).svg"
+                    alt="Apple Store"
+                    class="h-5"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certifications -->
+          <div class="flex justify-center gap-5 mt-6">
+            <img src="images/certifications/Frame 26086959.svg" />
+            <img src="images/certifications/Frame 26086960.svg" />
+            <img src="images/certifications/Frame 26086957.svg" />
+            <img src="images/certifications/Frame 26086961.svg" />
+            <img src="images/certifications/Frame 26086958.svg" />
+          </div>
+
+          <!-- Social Icons -->
+          <div class="flex justify-center gap-4 mt-4">
+            <img src="images/social-media/Social media icons-4.svg" />
+            <img src="images/social-media/Social media icons-3.svg" />
+            <img src="images/social-media/_Facebook.svg" />
+            <img src="images/social-media/Social media icons-2.svg" />
+            <img src="images/social-media/Social media icons-1.svg" />
+            <img src="images/social-media/Social media icons.svg" />
+          </div>
+
+          <!-- Email -->
+          <p class="text-[#0077db] text-sm mt-2" dir="ltr">Bilito@Gmail.Com</p>
+
+          <!-- Back to top -->
+          <button
+            id="scrollToTop"
+            class="pt-3 cursor-pointer bg-none border-none"
+          >
+            <img src="images/arrow-circle-up.svg" alt="arrow-circle-up" />
+          </button>
+        </div>
+      </footer>
+    </div>
+    <script>
+      const userButton = document.querySelector("button");
+      userButton.addEventListener("click", function () {
+        alert("در حال حاضر امکان ثبت‌نام نیست!");
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const btnDesktop = document.getElementById("scrollToTopDesktop");
+        const btnMobile = document.getElementById("scrollToTop");
+        const scrollContainer = document.getElementById("scrollContainer");
+
+        if (btnDesktop && scrollContainer) {
+          btnDesktop.addEventListener("click", () => {
+            scrollContainer.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+
+        if (btnMobile && scrollContainer) {
+          btnMobile.addEventListener("click", () => {
+            scrollContainer.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
